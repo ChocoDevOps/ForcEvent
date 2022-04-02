@@ -1,0 +1,4 @@
+name: ForcEvent
+version: '${project.version}'
+main: me.lorenzo.forcevent.ForcEvent
+description: Plugin that forces players to go to specified server on join

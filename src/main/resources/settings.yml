@@ -1,0 +1,15 @@
+target-server: 'Bedwars1'
+lobby-server: 'Hub1'
+eligible-servers:
+  - 'Parkour'
+  - 'Prison'
+command-delay: 60
+messages-on-remaining:
+  - 60
+  - 30
+  - 20
+  - 10
+  - 5
+  - 3
+  - 2
+  - 1

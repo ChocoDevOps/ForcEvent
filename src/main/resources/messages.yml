@@ -1,0 +1,6 @@
+state:
+  event: '&c&lEVENT MODE'
+  routine: '&a&lROUTINE MODE'
+state-switched: '&aYou successfully switched routine to {state}'
+sent-message: '&aYou have been sent to &7{server}'
+delay-message: '&aYou will be redirected to &7{server} in &7{seconds} seconds'
