@@ -22,25 +22,29 @@ public class ForceventCommand extends Command {
 
     @Override
     public void execute(CommandSender sender, String[] args) {
-        NetworkHandler networkHandler = NetworkHandler.getInstance();
+        if(sender.hasPermission("server.forcetp")) {
+            NetworkHandler networkHandler = NetworkHandler.getInstance();
 
-        NetworkState networkState = networkHandler.toggleNetworkState();
-        Placeholder routine = new Placeholder("state", Messenger.getMessage(networkState.getPath()));
+            NetworkState networkState = networkHandler.toggleNetworkState();
+            Placeholder routine = new Placeholder("state", Messenger.getMessage(networkState.getPath()));
 
-        Messenger.sendMessage(sender, "state-switched", routine);
+            Messenger.sendMessage(sender, "state-switched", routine);
 
-        if(networkState == NetworkState.EVENT) {
-            AtomicInteger taskId = new AtomicInteger(0);
-            taskId.set(ForcEvent.getInstance().getProxy().getScheduler().schedule(ForcEvent.getInstance(),
-                    new RedirectTask(true, new RedirectCallback() {
-                        @Override
-                        public void onDone() {
-                            ForcEvent.getInstance().getProxy().getScheduler().cancel(taskId.get());
-                            NetworkHandler.getInstance().setStarted(true);
-                        }
-                    }), 1, 1, TimeUnit.SECONDS).getId());
+            if(networkState == NetworkState.EVENT) {
+                AtomicInteger taskId = new AtomicInteger(0);
+                taskId.set(ForcEvent.getInstance().getProxy().getScheduler().schedule(ForcEvent.getInstance(),
+                        new RedirectTask(true, new RedirectCallback() {
+                            @Override
+                            public void onDone() {
+                                ForcEvent.getInstance().getProxy().getScheduler().cancel(taskId.get());
+                                NetworkHandler.getInstance().setStarted(true);
+                            }
+                        }), 1, 1, TimeUnit.SECONDS).getId());
+            } else {
+                NetworkHandler.getInstance().setStarted(false);
+            }
         } else {
-            NetworkHandler.getInstance().setStarted(false);
+            sender.sendMessage("No permissions");
         }
     }
 }
