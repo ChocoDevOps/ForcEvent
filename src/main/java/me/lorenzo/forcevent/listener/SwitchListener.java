@@ -20,6 +20,10 @@ public class SwitchListener implements Listener {
     @EventHandler
     public void on(ServerSwitchEvent event) {
         if(NetworkHandler.getInstance().getNetworkState() == NetworkState.EVENT) {
+            if(event.getFrom() == null) {
+                return;
+            }
+
             if(event.getFrom().getName().equals(lobbyName)) {
                 if(NetworkHandler.getInstance().isStarted()) {
                     event.getPlayer().connect(ForcEvent.getInstance().getProxy().getServerInfo(eventName));
